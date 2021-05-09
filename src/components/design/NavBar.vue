@@ -1,17 +1,12 @@
 <template>
   <div>
     <p>{{ header }}</p>
-    <SearchBar></SearchBar>
+    
   </div>
 </template>
 
 <script>
-import SearchBar from "../repos/SearchBar.vue";
-
 export default {
-  components: {
-    SearchBar,
-  },
   data() {
     return {
       header: "Rekrutacja GBX Soft",

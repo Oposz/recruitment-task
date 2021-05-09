@@ -1,14 +1,57 @@
 <template>
+  <NavBar></NavBar>
+  <SearchBar
+  @search-repos="searchRepos"
+  ></SearchBar>
   <div class="wrap">
-    <Repo></Repo>
+    <Repo
+    v-for="repo in repos"
+    :key="repo.id"
+    :repo="repo"
+    :repos="repos"
+    ></Repo>
   </div>
 </template>
 
 <script>
 import Repo from "./Repo.vue"
+import NavBar from "../design/NavBar.vue"
+import SearchBar from "./SearchBar.vue"
 export default {
+  
   components:{
     Repo,
+    NavBar,
+    SearchBar
+  },
+  emits:['searchRepos'],
+  data(){
+    return{
+      repos:[]
+    }
+  },
+  methods:{
+    searchRepos(user){
+      fetch(`https://api.github.com/users/${user}/repos`).
+      then((response)=>{
+        if(response.ok){
+          return response.json();
+        }
+      }).then((data)=>{
+        const repo=[]
+        for(const id in data){
+          repo.push({
+            id:id,
+            branch:data[id].default_branch,
+            description:data[id].description,
+            name:data[id].name,
+            photo:data[id].owner.avatar_url
+          })
+        }
+        this.repos=repo
+        
+      })//catch
+    }
   }
 };
 </script>

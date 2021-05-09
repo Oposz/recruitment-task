@@ -1,12 +1,25 @@
 <template>
   <div>
     <p>Wpisz nazwę użytkownika repo</p>
-    <input type="text" placeholder="oposz" />
+    <input type="text" placeholder="oposz" @keydown.enter="searchRepos()" v-model="user"/>
   </div>
 </template>
 
 <script>
-export default {};
+export default {
+  data(){
+    return{
+      user:''
+    }
+  },
+  
+  methods:{
+    searchRepos(){
+      
+      this.$emit('search-repos',this.user)
+    }
+  }
+};
 </script>
 
 <style lang="scss" scoped>

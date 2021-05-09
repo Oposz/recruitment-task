@@ -1,16 +1,13 @@
 <template>
   <Logo></Logo>
-  <NavBar></NavBar>
   <ReposList></ReposList>
 </template>
 
 <script>
-import NavBar from "./components/design/NavBar.vue";
 import Logo from "./components/design/Logo.vue";
 import ReposList from "./components/repos/ReposList.vue";
 export default {
   components: {
-    NavBar,
     Logo,
     ReposList,
   },
