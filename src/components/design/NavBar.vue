@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import SearchBar from "./SearchBar.vue";
+import SearchBar from "../repos/SearchBar.vue";
 
 export default {
   components: {
@@ -19,7 +19,7 @@ export default {
   },
 };
 </script>
-<style scoped>
+<style lang="scss" scoped>
 p {
   position: absolute;
   width: 528px;

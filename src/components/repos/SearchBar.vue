@@ -9,13 +9,13 @@
 export default {};
 </script>
 
-<style  scoped>
+<style lang="scss" scoped>
 div {
   display: flex;
   flex-direction: column;
   justify-content: space-around;
   position: absolute;
-  width: 398px;
+  width: 393px;
   height: 62px;
   left: 1167px;
   top: 119px;
@@ -29,6 +29,9 @@ div {
     line-height: 18px;
   }
   & input {
+    -webkit-appearance:none;
+    -moz-appearance:none;
+    appearance:none;
     background: #ffffff;
     border: 2px solid #f1f4ff;
     box-sizing: border-box;

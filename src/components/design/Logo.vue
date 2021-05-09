@@ -1,8 +1,8 @@
 <template>
-    <img src="../assets/logo.svg" alt="logo gbx soft">
+    <img src="../../assets/logo.svg" alt="logo gbx soft">
 </template>
 
-<style scoped>
+<style lang="scss" scoped>
 img{
     position: absolute;
     left: 18.75%;
