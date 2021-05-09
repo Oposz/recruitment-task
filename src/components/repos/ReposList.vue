@@ -3,13 +3,17 @@
   <SearchBar
   @search-repos="searchRepos"
   ></SearchBar>
-  <div class="wrap">
+  <div class="box">
+    <div v-if="!error">
     <Repo
     v-for="repo in repos"
     :key="repo.id"
     :repo="repo"
     :repos="repos"
+    
     ></Repo>
+    </div>
+    <h1 v-else>{{error}}</h1>
   </div>
 </template>
 
@@ -27,7 +31,8 @@ export default {
   emits:['searchRepos'],
   data(){
     return{
-      repos:[]
+      repos:[],
+      error:null
     }
   },
   methods:{
@@ -36,6 +41,10 @@ export default {
       then((response)=>{
         if(response.ok){
           return response.json();
+        }else if(response.status===404){
+          throw new Error('Nie ma takiego użytkownika.')
+        }else{
+          throw new Error('Coś poszło nie tak, spróbuj ponownie później ;(')
         }
       }).then((data)=>{
         const repo=[]
@@ -48,16 +57,18 @@ export default {
             photo:data[id].owner.avatar_url
           })
         }
-        this.repos=repo
-        
-      })//catch
+        this.repos=repo;
+        this.error=null;
+      }).catch((error)=>{
+        this.error=error.message;
+      })
     }
   }
 };
 </script>
 
 <style lang="scss" scoped>
-.wrap{
+.box{
   position: absolute;
   width: 1200px;
   height: 568px;
