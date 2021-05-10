@@ -11,11 +11,9 @@ export default {
     Logo,
     ReposList,
   },
-  data(){
-    return{
-      
-    }
-  }
+  data() {
+    return {};
+  },
 };
 </script>
 
