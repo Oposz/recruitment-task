@@ -1,16 +1,13 @@
 <template>
-  <NavBar></NavBar>
+  <NavBar />
   <SearchBar @search-repos="searchRepos"></SearchBar>
-  <div class="box">
-    <div v-if="!error">
-      <Repo
-        v-for="repo in repos"
-        :key="repo.id"
-        :repo="repo"
-        :repos="repos"
-      ></Repo>
+  <div class="spacer">
+    <div class="box">
+      <div class="repos" v-if="!error">
+        <Repo v-for="repo in repos" :key="repo.id" :repo="repo"></Repo>
+      </div>
+      <h1 v-else>{{ error }}</h1>
     </div>
-    <h1 v-else>{{ error }}</h1>
   </div>
 </template>
 
@@ -27,13 +24,7 @@ export default {
   emits: ["searchRepos"],
   data() {
     return {
-      repos: [{
-        id:'siusiak',
-        branch:'siusiak',
-        description:'dasdasdasda',
-        name:'oposz',
-        photo:'../../assets/keydropek.jpg'
-      }],
+      repos: [],
       error: null,
     };
   },
@@ -72,21 +63,33 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.box {
+.spacer {
   position: absolute;
   width: 1200px;
   height: 568px;
   left: 360px;
   top: 206px;
-  display: flex;
-  justify-content: flex-start;
-  flex-flow: column;
+  overflow: hidden;
   box-shadow: 1px 0px 16px rgba(0, 0, 0, 0.17);
   border-radius: 10px;
-  padding-top: 20px;
-  & h1 {
-    margin: 0 0 0 20px;
-    color: #002bdc;
+  padding-bottom:30px ;
+  
+  .box {
+    display: flex;
+    justify-content: flex-start;
+    flex-flow: column;
+    padding: 40px 39px;
+    overflow: auto;
+    height: 100%;
+    h1 {
+      margin: auto;
+      color: #002bdc;
+    }
+    .repos {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+    }
   }
 }
+
 </style>

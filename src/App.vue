@@ -1,6 +1,6 @@
 <template>
-  <Logo></Logo>
-  <ReposList></ReposList>
+  <Logo/>
+  <ReposList/>
 </template>
 
 <script>

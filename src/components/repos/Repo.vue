@@ -1,22 +1,22 @@
 <template>
   <div class="wrapper">
-    <img :src="repo.photo" alt="zdjęcie" />
+    <img :src="repo.photo" alt="zdjęcie" class="photo" />
     <div class="inside_wrapper">
       <h2>{{ repo.name }}</h2>
-      <p class="description">{{ repo.description }}</p>
+      <p class="description">{{ repo.description ?? "Brak opisu" }}</p>
       <p class="branch">{{ repo.branch }}</p>
     </div>
-    <Arrow></Arrow>
+    <Arrow />
   </div>
 </template>
 
 <script>
-import Arrow from "../design/Arrow.vue"
+import Arrow from "../design/Arrow.vue";
 export default {
-  components:{
+  components: {
     Arrow,
   },
-  props: ["repo", "key", "repos"],
+  props: ["repo"],
   data() {
     return {};
   },
@@ -26,35 +26,41 @@ export default {
 <style lang="scss" scoped>
 .wrapper {
   display: flex;
-  justify-content: space-evenly;
-  margin: 20px 20px 0px 39px;
+  align-items: flex-start;
   width: 555px;
   height: 130px;
-  & img {
+  margin: 0 20px 20px 0;
+  padding: 26px 30px 13px 30px;
+  background-color: #f1f4ff;
+  border-radius: 10px;
+  .photo {
     width: 60px;
     height: 60px;
     border-radius: 50%;
     object-fit: cover;
   }
-  & .inside_wrapper {
+  .inside_wrapper {
     display: flex;
     flex-flow: column;
-    justify-content: space-evenly;
-    & h2 {
+    margin: 0 20px;
+    h2 {
       margin: 0;
+      color: #304389;
     }
-    & .description {
+    .description {
       font-style: normal;
       font-weight: normal;
       font-size: 16px;
       line-height: 20px;
+      color: #848484;
       margin: 0;
     }
-    & .branch {
+    .branch {
       font-style: normal;
       font-weight: normal;
       font-size: 10px;
       line-height: 12px;
+      color: #a5b8ff;
       margin: 0;
     }
   }
