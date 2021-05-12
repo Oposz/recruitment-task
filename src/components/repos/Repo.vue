@@ -6,15 +6,15 @@
       <p class="description">{{ repo.description ?? "Brak opisu" }}</p>
       <p class="branch">{{ repo.branch }}</p>
     </div>
-    <Arrow />
+    <a target="_blank" :href="repo.link">
+      <img src="../../assets/arrow.svg" alt="strzałka" />
+    </a>
   </div>
 </template>
 
 <script>
-import Arrow from "../design/Arrow.vue";
 export default {
   components: {
-    Arrow,
   },
   props: ["repo"],
   data() {
@@ -42,6 +42,7 @@ export default {
   .inside_wrapper {
     display: flex;
     flex-flow: column;
+
     margin: 0 20px;
     h2 {
       margin: 0;
@@ -61,8 +62,13 @@ export default {
       font-size: 10px;
       line-height: 12px;
       color: #a5b8ff;
-      margin: 0;
+      margin-bottom: auto;
     }
+  }
+  a {
+    width: 34px;
+    height: 34px;
+    margin: 24px 0 0 auto;
   }
 }
 </style>

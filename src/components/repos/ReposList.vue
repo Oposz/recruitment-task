@@ -49,6 +49,7 @@ export default {
               description: data[id].description,
               name: data[id].name,
               photo: data[id].owner.avatar_url,
+              link:data[id].html_url
             });
           }
           this.repos = repo;
@@ -72,8 +73,8 @@ export default {
   overflow: hidden;
   box-shadow: 1px 0px 16px rgba(0, 0, 0, 0.17);
   border-radius: 10px;
-  padding-bottom:30px ;
-  
+  padding-bottom: 30px;
+
   .box {
     display: flex;
     justify-content: flex-start;
@@ -91,5 +92,4 @@ export default {
     }
   }
 }
-
 </style>
