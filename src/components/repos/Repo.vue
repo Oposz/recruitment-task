@@ -33,6 +33,7 @@ export default {
   padding: 26px 30px 13px 30px;
   background-color: #f1f4ff;
   border-radius: 10px;
+  // overflow: hidden;
   .photo {
     width: 60px;
     height: 60px;
@@ -42,7 +43,8 @@ export default {
   .inside_wrapper {
     display: flex;
     flex-flow: column;
-
+    overflow: hidden;
+    width:340px;
     margin: 0 20px;
     h2 {
       margin: 0;
@@ -55,6 +57,10 @@ export default {
       line-height: 20px;
       color: #848484;
       margin: 0;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      overflow: hidden;
+      
     }
     .branch {
       font-style: normal;

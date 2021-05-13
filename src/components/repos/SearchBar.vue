@@ -1,40 +1,50 @@
 <template>
   <div class="container">
     <p>Wpisz nazwę użytkownika repo</p>
-    <div class="input_wrapper">
+    <div class="input_wrapper"
+    :class="isSearchDisabled ? disabled:null"
+    >
       <input
         type="text"
         placeholder="oposz"
-        @keydown.enter="searchRepos()"
+        @keydown.enter="searchRepos"
         v-model="user"
+        @focus="toggleVisibility"
+        @focusout="toggleVisibilityAfter"
+        :disabled="isSearchDisabled"
       />
       <img
+        class="search"
         src="../../assets/arrow.svg"
         alt="strzałka"
         @click="searchRepos()"
-        
+        :style="{visibility: focus? 'visible':'hidden'}" 
       />
     </div>
   </div>
 </template>
 
 <script>
-// import Arrow from "../design/Arrow.vue";
 export default {
-  components: {
-    // Arrow,
-  },
+  props:['isSearchDisabled'],
   data() {
     return {
       user: "",
-      focus: false,
-    };
+      focus:false,
+      };
   },
   methods: {
     searchRepos() {
       this.$emit("search-repos", this.user);
     },
-   
+   toggleVisibility(){
+     this.focus=!this.focus
+   },
+   toggleVisibilityAfter(){
+     setTimeout(() => {
+       this.focus=!this.focus
+     },110);
+   }
   },
 };
 </script>
@@ -74,13 +84,14 @@ export default {
       padding: 5px;
     }
 
-    img {
+    .search {
       position: absolute;
       width: 17px;
       height: 16px;
       top: 33px;
       left: 350px;
       visibility: hidden;
+      cursor:pointer;
     }
   }
 }

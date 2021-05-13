@@ -6,10 +6,12 @@
 <script>
 import Logo from "./components/design/Logo.vue";
 import ReposList from "./components/repos/ReposList.vue";
+
 export default {
   components: {
     Logo,
     ReposList,
+    
   },
   data() {
     return {};
@@ -26,5 +28,8 @@ export default {
 }
 body {
   margin: 0;
+}
+.disabled{
+  pointer-events: none;
 }
 </style>
