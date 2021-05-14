@@ -1,9 +1,10 @@
 <template>
   <div class="container">
-    <p>Wpisz nazwę użytkownika repo</p>
+    <p class="instruction">Wpisz nazwę użytkownika repo</p>
     <div class="input_wrapper">
       <input
         type="text"
+        class="user_input"
         placeholder="oposz"
         @keydown.enter="searchRepos"
         v-model="user"
@@ -48,7 +49,7 @@ export default {
   left: 1167px;
   top: 119px;
 
-  p {
+  .instruction {
     color: #304389;
     margin: 0 0 0 8px;
     font-style: normal;
@@ -57,7 +58,7 @@ export default {
     line-height: 18px;
   }
   .input_wrapper {
-    input {
+    .user_input {
       -webkit-appearance: none;
       -moz-appearance: none;
       appearance: none;

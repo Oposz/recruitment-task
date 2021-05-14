@@ -1,5 +1,5 @@
 <template>
-  <NavBar />
+  <Header />
   <SearchBar @search-repos="searchRepos"></SearchBar>
   <div class="spacer">
     <Scrollbar>
@@ -7,13 +7,13 @@
         <img
           class="loader"
           v-if="isLoading === true"
-          src="../../assets/loader.gif"
+          src="@/assets/loader.gif"
           alt="loader"
         />
         <div class="repos" v-else-if="!error">
           <Repo v-for="repo in repos" :key="repo.id" :repo="repo"></Repo>
         </div>
-        <h1 v-else>{{ error }}</h1>
+        <h1 class="error" v-else>{{ error }}</h1>
       </div>
     </Scrollbar>
   </div>
@@ -22,12 +22,12 @@
 <script>
 import Scrollbar from "./Scrollbar";
 import Repo from "./Repo.vue";
-import NavBar from "../design/NavBar.vue";
+import Header from "../design/Header.vue";
 import SearchBar from "./SearchBar.vue";
 export default {
   components: {
     Repo,
-    NavBar,
+    Header,
     SearchBar,
     Scrollbar,
   },
@@ -93,10 +93,6 @@ export default {
   box-shadow: 1px 0px 16px rgba(0, 0, 0, 0.17);
   border-radius: 10px;
   padding: 40px 0;
-  .test {
-    height: 400;
-  }
-
   .box {
     display: flex;
     justify-content: flex-start;
@@ -108,7 +104,7 @@ export default {
       height: 200px;
       margin: auto;
     }
-    h1 {
+    .error {
       margin: auto;
       color: #002bdc;
     }

@@ -2,23 +2,19 @@
   <div class="wrapper">
     <img :src="repo.photo" alt="zdjęcie" class="photo" />
     <div class="inside_wrapper">
-      <h2>{{ repo.name }}</h2>
+      <h2 class="repo_name">{{ repo.name }}</h2>
       <p class="description">{{ repo.description ?? "Brak opisu" }}</p>
       <p class="branch">{{ repo.branch }}</p>
     </div>
-    <a target="_blank" :href="repo.link">
-      <img src="../../assets/arrow.svg" alt="strzałka" />
+    <a class="repo_link" target="_blank" :href="repo.link">
+      <img src="@/assets/arrow.svg" alt="strzałka" />
     </a>
   </div>
 </template>
 
 <script>
 export default {
-  components: {},
   props: ["repo"],
-  data() {
-    return {};
-  },
 };
 </script>
 
@@ -41,7 +37,7 @@ export default {
     overflow: hidden;
     width: 340px;
     margin: 0 20px;
-    h2 {
+    .repo_name {
       margin: 0;
       color: #304389;
     }
@@ -65,7 +61,7 @@ export default {
       margin-bottom: auto;
     }
   }
-  a {
+  .repo_link {
     width: 34px;
     height: 34px;
     align-self: center;

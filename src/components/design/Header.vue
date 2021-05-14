@@ -1,6 +1,6 @@
 <template>
   <div>
-    <p>{{ header }}</p>
+    <p class="header">{{ header }}</p>
   </div>
 </template>
 
@@ -14,7 +14,7 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-p {
+.header {
   position: absolute;
   width: 528px;
   height: 71px;
@@ -25,6 +25,6 @@ p {
   font-size: 48px;
   line-height: 56px;
   color: #002bdc;
-  margin:0;
+  margin: 0;
 }
 </style>
