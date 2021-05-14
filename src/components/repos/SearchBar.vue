@@ -43,7 +43,7 @@ export default {
    toggleVisibilityAfter(){
      setTimeout(() => {
        this.focus=!this.focus
-     },110);
+     },80);
    }
   },
 };

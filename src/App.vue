@@ -7,6 +7,7 @@
 import Logo from "./components/design/Logo.vue";
 import ReposList from "./components/repos/ReposList.vue";
 
+
 export default {
   components: {
     Logo,

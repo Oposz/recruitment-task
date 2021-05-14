@@ -14,8 +14,7 @@
 
 <script>
 export default {
-  components: {
-  },
+  components: {},
   props: ["repo"],
   data() {
     return {};
@@ -27,13 +26,9 @@ export default {
 .wrapper {
   display: flex;
   align-items: flex-start;
-  width: 555px;
-  height: 130px;
-  margin: 0 20px 20px 0;
   padding: 26px 30px 13px 30px;
   background-color: #f1f4ff;
   border-radius: 10px;
-  // overflow: hidden;
   .photo {
     width: 60px;
     height: 60px;
@@ -44,7 +39,7 @@ export default {
     display: flex;
     flex-flow: column;
     overflow: hidden;
-    width:340px;
+    width: 340px;
     margin: 0 20px;
     h2 {
       margin: 0;
@@ -60,7 +55,6 @@ export default {
       text-overflow: ellipsis;
       white-space: nowrap;
       overflow: hidden;
-      
     }
     .branch {
       font-style: normal;
@@ -74,7 +68,7 @@ export default {
   a {
     width: 34px;
     height: 34px;
-    margin: 24px 0 0 auto;
+    align-self: center;
   }
 }
 </style>
