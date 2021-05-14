@@ -1,5 +1,5 @@
 <template>
-    <img src="../../assets/logo.svg" alt="logo gbx soft">
+    <img src="@/assets/logo.svg" alt="logo gbx soft">
 </template>
 
 <style lang="scss" scoped>

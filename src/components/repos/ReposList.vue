@@ -1,6 +1,10 @@
 <template>
-  <Header />
-  <SearchBar @search-repos="searchRepos"></SearchBar>
+  <SearchBar
+    @search="getPromise"
+    :defaultUser="defaultUser"
+    :instruction="instruction"
+    :isSearchDisabled="isSearchDisabled"
+  ></SearchBar>
   <div class="spacer">
     <Scrollbar>
       <div class="box">
@@ -11,7 +15,7 @@
           alt="loader"
         />
         <div class="repos" v-else-if="!error">
-          <Repo v-for="repo in repos" :key="repo.id" :repo="repo"></Repo>
+          <Repo v-for="repo in repos" :key="repo.id" :repo="repo" />
         </div>
         <h1 class="error" v-else>{{ error }}</h1>
       </div>
@@ -22,61 +26,78 @@
 <script>
 import Scrollbar from "./Scrollbar";
 import Repo from "./Repo.vue";
-import Header from "../design/Header.vue";
 import SearchBar from "./SearchBar.vue";
 export default {
   components: {
     Repo,
-    Header,
     SearchBar,
     Scrollbar,
   },
-  emits: ["searchRepos"],
+  emits: ["search"],
   data() {
     return {
       repos: [],
       error: null,
       isLoading: false,
       isSearchDisabled: false,
+      instruction: "Wpisz nazwę użytkownika repo",
+      defaultUser: "oposz",
     };
   },
   methods: {
-    async searchRepos(user) {
+    sortRepos(repo) {
+      let sortowane = repo.sort((a, b) => b.time - a.time);
+      sortowane.reverse();
+      this.repos=sortowane
+      this.isLoading=false;
+      this.isSearchDisabled=false;
+    },
+
+    async renderRepos(data) {
+      const repo = [];
+      for (const id in data) {
+        repo.push({
+          id: id,
+          branch: data[id].default_branch,
+          description: data[id].description,
+          name: data[id].name,
+          photo: data[id].owner.avatar_url,
+          link: data[id].html_url,
+          time: new Date(data[id].updated_at).getTime(),
+        });
+      }
+      this.sortRepos(repo);
+    },
+
+    async validate(response) {
       try {
-        this.isSearchDisabled = true;
-        this.isLoading = true;
-        let response = await fetch(
-          `https://api.github.com/users/${user}/repos`
-        );
-        if (response.ok) {
-          let data = await response.json();
-          const repo = [];
-          for (const id in data) {
-            repo.push({
-              id: id,
-              branch: data[id].default_branch,
-              description: data[id].description,
-              name: data[id].name,
-              photo: data[id].owner.avatar_url,
-              link: data[id].html_url,
-              time: new Date(data[id].updated_at).getTime(),
-            });
-          }
-          this.repos = repo.sort((a, b) => b.time - a.time);
-          this.repos.reverse();
-          this.error = null;
-          this.isLoading = false;
-          this.isSearchDisabled = false;
-        } else if (response.status === 404) {
+        if (response.status === 404) {
           throw new Error("Nie ma takiego użytkownika.");
         } else {
           throw new Error("Coś poszło nie tak, spróbuj ponownie później ;(");
         }
       } catch (error) {
         this.error = error.message;
-        this.isLoading = false;
-        this.isSearchDisabled = false;
+        this.isLoading=false;
+        this.isSearchDisabled=false;
       }
+    },
+
+    async getPromise(value) {
+      this.isLoading=true;
+      this.isSearchDisabled=true;
+      this.error=null;
+      await fetch(`https://api.github.com/users/${value}/repos`).then(
+        (response) => {
+          if (response.ok) {
+            return response.json().then((data) => {
+              this.renderRepos(data);
+            });
+          } else {
+            this.validate(response);
+          }
+        }
+      );
     },
   },
 };

@@ -1,21 +1,21 @@
 <template>
   <div class="container">
-    <p class="instruction">Wpisz nazwę użytkownika repo</p>
+    <p class="instruction">{{instruction}}</p>
     <div class="input_wrapper">
       <input
         type="text"
         class="user_input"
-        placeholder="oposz"
-        @keydown.enter="searchRepos"
-        v-model="user"
+        :placeholder="defaultUser"
+        @keydown.enter="search()"
+        v-model="value"
         :disabled="isSearchDisabled"
       />
       <img
         class="arrow"
-        :class="{ visible: user !== '' }"
+        :class="{ visible: value !== '' }"
         src="@/assets/arrow.svg"
         alt="strzałka"
-        @click="searchRepos()"
+        @click="search()"
       />
     </div>
   </div>
@@ -23,16 +23,16 @@
 
 <script>
 export default {
-  props: ["isSearchDisabled"],
+  props: ['isSearchDisabled','defaultUser','instruction'],
   data() {
     return {
-      user: "",
+      value: "",
       focus: false,
     };
   },
   methods: {
-    searchRepos() {
-      this.$emit("search-repos", this.user);
+    search() {
+      this.$emit("search", this.value);
     },
   },
 };

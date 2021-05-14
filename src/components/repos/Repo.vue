@@ -7,7 +7,7 @@
       <p class="branch">{{ repo.branch }}</p>
     </div>
     <a class="repo_link" target="_blank" :href="repo.link">
-      <img src="@/assets/arrow.svg" alt="strzałka" />
+      <img src="@/assets/arrow.svg" alt="przejdź do repo" />
     </a>
   </div>
 </template>

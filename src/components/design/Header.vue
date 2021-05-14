@@ -1,18 +1,9 @@
 <template>
   <div>
-    <p class="header">{{ header }}</p>
+    <p class="header">Rekrutacja GBX Soft</p>
   </div>
 </template>
 
-<script>
-export default {
-  data() {
-    return {
-      header: "Rekrutacja GBX Soft",
-    };
-  },
-};
-</script>
 <style lang="scss" scoped>
 .header {
   position: absolute;
