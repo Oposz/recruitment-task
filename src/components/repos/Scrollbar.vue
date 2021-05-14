@@ -33,7 +33,7 @@ export default {
   width: 4px !important;
   margin-top: -8px;
   margin-bottom: -8px;
-  right: 12px;
+  right: 18px;
   .simplebar-scrollbar {
     background: #a8a8a8;
     border-radius: 50px;
