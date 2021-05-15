@@ -1,6 +1,6 @@
 <template>
   <SearchBar
-    @search="getPromise"
+    @search="displayRepos"
     :defaultUser="defaultUser"
     :instruction="instruction"
     :isSearchDisabled="isSearchDisabled"
@@ -45,15 +45,33 @@ export default {
     };
   },
   methods: {
-    sortRepos(repo) {
-      let sortowane = repo.sort((a, b) => b.time - a.time);
-      sortowane.reverse();
-      this.repos=sortowane
-      this.isLoading=false;
-      this.isSearchDisabled=false;
+
+    async displayRepos(user){
+      try{
+        this.error=null;
+        this.isLoading=true;
+        const fetchedRepos= await this.fetchRepos(user);
+        const processedRepos=await this.getProcessRapos(fetchedRepos);
+        this.repos=processedRepos
+        this.isLoading=false;
+      }catch(error){
+        this.handleError(error);
+      }
     },
 
-    async renderRepos(data) {
+    async fetchRepos(value){
+      let response= await fetch(`https://api.github.com/users/${value}/repos`);
+      if(response.ok){
+        return await response.json();
+      }else if(response.status === 404){
+        throw new Error('Nie ma takiego użytkownika')
+      }else{
+        throw new Error('Coś poszło nie tak, spróbuj ponownie później ;(');
+      }
+    },
+
+    getProcessRapos(repos){
+      const data=repos;
       const repo = [];
       for (const id in data) {
         repo.push({
@@ -66,41 +84,73 @@ export default {
           time: new Date(data[id].updated_at).getTime(),
         });
       }
-      this.sortRepos(repo);
+      let sorted = repo.sort((a, b) => b.time - a.time);
+      return sorted.reverse();
     },
 
-    async validate(response) {
-      try {
-        if (response.status === 404) {
-          throw new Error("Nie ma takiego użytkownika.");
-        } else {
-          throw new Error("Coś poszło nie tak, spróbuj ponownie później ;(");
-        }
-      } catch (error) {
-        this.error = error.message;
-        this.isLoading=false;
-        this.isSearchDisabled=false;
-      }
-    },
+    handleError(error){
+      this.isLoading=false;
+      this.error=error.message
+    }
 
-    async getPromise(value) {
-      this.isLoading=true;
-      this.isSearchDisabled=true;
-      this.error=null;
-      await fetch(`https://api.github.com/users/${value}/repos`).then(
-        (response) => {
-          if (response.ok) {
-            return response.json().then((data) => {
-              this.renderRepos(data);
-            });
-          } else {
-            this.validate(response);
-          }
-        }
-      );
-    },
-  },
-};
+
+  //   sortRepos(repo) {
+  //     let sortowane = repo.sort((a, b) => b.time - a.time);
+  //     sortowane.reverse();
+  //     this.repos=sortowane
+  //     this.isLoading=false;
+  //     this.isSearchDisabled=false;
+  //   },
+
+  //   async renderRepos(data) {
+  //     const repo = [];
+  //     for (const id in data) {
+  //       repo.push({
+  //         id: id,
+  //         branch: data[id].default_branch,
+  //         description: data[id].description,
+  //         name: data[id].name,
+  //         photo: data[id].owner.avatar_url,
+  //         link: data[id].html_url,
+  //         time: new Date(data[id].updated_at).getTime(),
+  //       });
+  //     }
+  //     this.sortRepos(repo);
+  //   },
+
+  //   async validate(response) {
+  //     try {
+  //       if (response.status === 404) {
+  //         throw new Error("Nie ma takiego użytkownika.");
+  //       } else {
+  //         throw new Error("Coś poszło nie tak, spróbuj ponownie później ;(");
+  //       }
+  //     } catch (error) {
+  //       this.error = error.message;
+  //       this.isLoading=false;
+  //       this.isSearchDisabled=false;
+  //     }
+  //   },
+
+  //   async getPromise(value) {
+  //     this.isLoading=true;
+  //     this.isSearchDisabled=true;
+  //     this.error=null;
+  //     await fetch(`https://api.github.com/users/${value}/repos`).then(
+  //       (response) => {
+  //         if (response.ok) {
+  //           return response.json().then((data) => {
+  //             this.renderRepos(data);
+  //           });
+  //         } else {
+  //           this.validate(response);
+  //         }
+  //       }
+  //     );
+  //   },
+  // },
+}
+}
 </script>
 
 <style lang="scss" scoped>
