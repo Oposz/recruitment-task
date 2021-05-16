@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <p class="instruction">{{instruction}}</p>
+    <p class="instruction">{{ instruction }}</p>
     <div class="input_wrapper">
       <input
         type="text"
@@ -23,7 +23,7 @@
 
 <script>
 export default {
-  props: ['isSearchDisabled','defaultUser','instruction'],
+  props: ["isSearchDisabled", "defaultUser", "instruction"],
   data() {
     return {
       value: "",
@@ -32,7 +32,9 @@ export default {
   },
   methods: {
     search() {
-      this.$emit("search", this.value);
+      if(!this.isSearchDisabled){
+        this.$emit("search", this.value);
+      }
     },
   },
 };

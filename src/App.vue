@@ -1,17 +1,14 @@
 <template>
-  <Logo />
   <Header />
   <ReposList />
 </template>
 
 <script>
-import Logo from "./components/design/Logo.vue";
 import ReposList from "./components/repos/ReposList.vue";
 import Header from "./components/design/Header.vue";
 
 export default {
   components: {
-    Logo,
     ReposList,
     Header,
   },

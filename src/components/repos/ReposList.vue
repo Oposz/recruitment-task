@@ -14,10 +14,13 @@
           src="@/assets/loader.gif"
           alt="loader"
         />
-        <div class="repos" v-else-if="!error">
+        <div class="repos" v-else-if="!error && repos.length > 0">
           <Repo v-for="repo in repos" :key="repo.id" :repo="repo" />
         </div>
-        <h1 class="error" v-else>{{ error }}</h1>
+        <h1 class="comunicat" v-else-if="!error && repos.length === 0">
+          Użytkownik nie ma żadnego repo.
+        </h1>
+        <h1 class="comunicat" v-else>{{ error }}</h1>
       </div>
     </Scrollbar>
   </div>
@@ -45,32 +48,32 @@ export default {
     };
   },
   methods: {
-
-    async displayRepos(user){
-      try{
-        this.error=null;
-        this.isLoading=true;
-        const fetchedRepos= await this.fetchRepos(user);
-        const processedRepos=await this.getProcessedRepos(fetchedRepos);
-        this.repos=processedRepos
-        this.isLoading=false;
-      }catch(error){
+    async displayRepos(user) {
+      this.isLoading = true;
+      this.error = null;
+      try {  
+        const fetchedRepos = await this.fetchRepos(user);
+        const processedRepos = this.getProcessedRepos(fetchedRepos);
+        this.repos = processedRepos;
+        console.log(this.repos.length);
+        this.isLoading = false;
+      } catch (error) {
         this.handleError(error);
       }
     },
 
-    async fetchRepos(value){
-      let response= await fetch(`https://api.github.com/users/${value}/repos`);
-      if(response.ok){
+    async fetchRepos(value) {
+      let response = await fetch(`https://api.github.com/users/${value}/repos`);
+      if (response.ok) {
         return await response.json();
-      }else if(response.status === 404){
-        throw new Error('Nie ma takiego użytkownika')
-      }else{
-        throw new Error('Coś poszło nie tak, spróbuj ponownie później ;(');
+      } else if (response.status === 404) {
+        throw new Error("Nie ma takiego użytkownika");
+      } else {
+        throw new Error("Coś poszło nie tak, spróbuj ponownie później ;(");
       }
     },
 
-    getProcessedRepos(repos){
+    getProcessedRepos(repos) {
       const processedRepos = [];
       for (const repo of repos) {
         processedRepos.push({
@@ -86,15 +89,16 @@ export default {
       return processedRepos.sort((a, b) => b.time - a.time).reverse();
     },
 
-    handleError(error){
-      this.isLoading=false;
-      this.error=error.message
-    }
-  }
-}
+    handleError(error) {
+      this.isLoading = false;
+      this.error = error.message;
+    },
+  },
+};
 </script>
 
 <style lang="scss" scoped>
+$text-color: #002bdc;
 .spacer {
   position: absolute;
   width: 1200px;
@@ -116,9 +120,9 @@ export default {
       height: 200px;
       margin: auto;
     }
-    .error {
+    .comunicat {
       margin: auto;
-      color: #002bdc;
+      color: $text-color;
     }
     .repos {
       display: grid;

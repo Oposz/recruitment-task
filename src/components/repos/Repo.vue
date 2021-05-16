@@ -2,7 +2,7 @@
   <div class="wrapper">
     <img :src="repo.photo" alt="zdjęcie" class="photo" />
     <div class="inside_wrapper">
-      <h2 class="repo_name">{{ repo.name }}</h2>
+      <h4 class="repo_name">{{ repo.name }}</h4>
       <p class="description">{{ repo.description ?? "Brak opisu" }}</p>
       <p class="branch">{{ repo.branch }}</p>
     </div>
