@@ -45,20 +45,24 @@ export default {
       isSearchDisabled: false,
       instruction: "Wpisz nazwę użytkownika repo",
       defaultUser: "oposz",
+      currentUser: "",
     };
   },
   methods: {
     async displayRepos(user) {
-      this.isLoading = true;
-      this.error = null;
-      try {  
-        const fetchedRepos = await this.fetchRepos(user);
-        const processedRepos = this.getProcessedRepos(fetchedRepos);
-        this.repos = processedRepos;
-        console.log(this.repos.length);
-        this.isLoading = false;
-      } catch (error) {
-        this.handleError(error);
+      if (user !== this.currentUser) {
+        this.isLoading = true;
+        this.error = null;
+        try {
+          const fetchedRepos = await this.fetchRepos(user);
+          const processedRepos = this.getProcessedRepos(fetchedRepos);
+          this.repos = processedRepos;
+          this.isLoading = false;
+          this.currentUser = user;
+        } catch (error) {
+          this.handleError(error);
+          this.currentUser = user;
+        }
       }
     },
 
