@@ -1,56 +1,56 @@
 <template>
-  <SearchBar
-    @search="displayRepos"
-    :defaultUser="defaultUser"
-    :instruction="instruction"
-    :isSearchDisabled="isSearchDisabled"
-  ></SearchBar>
-  <div class="spacer">
+  <div class="repos-list">
     <Scrollbar>
-      <div class="box">
+      <div class="repos-list__loader-container">
         <img
-          class="loader"
+          class="repos-list__loader-container__loader"
           v-if="isLoading === true"
           src="@/assets/loader.gif"
           alt="loader"
         />
-        <div class="repos" v-else-if="!error && repos.length > 0">
+        <div class="repos-list__repo" v-else-if="!error && repos.length > 0">
           <Repo v-for="repo in repos" :key="repo.id" :repo="repo" />
         </div>
-        <h1 class="comunicat" v-else-if="!error && repos.length === 0">
+        <h1 class="repos-list__comunicat" v-else-if="!error && repos.length === 0">
           Użytkownik nie ma żadnego repo.
         </h1>
-        <h1 class="comunicat" v-else>{{ error }}</h1>
+        <h1 class="repos-list__comunicat" v-else>{{ error }}</h1>
       </div>
     </Scrollbar>
   </div>
 </template>
 
 <script>
-import Scrollbar from "./Scrollbar";
+import Scrollbar from "../shared/Scrollbar";
 import Repo from "./Repo.vue";
-import SearchBar from "./SearchBar.vue";
 export default {
   components: {
     Repo,
-    SearchBar,
     Scrollbar,
   },
-  emits: ["search"],
+  props:['userName'],
+  emits: ["isSearchDisabledChange"],
   data() {
     return {
       repos: [],
       error: null,
       isLoading: false,
       isSearchDisabled: false,
-      instruction: "Wpisz nazwę użytkownika repo",
-      defaultUser: "oposz",
       currentUser: "",
     };
+  },
+  watch:{
+    userName: function(user){
+     this.displayRepos(user)
+    },
+    isSearchDisabled: function(state){
+      this.$emit("isSearchDisabledChange",state)
+    }
   },
   methods: {
     async displayRepos(user) {
       if (user !== this.currentUser) {
+        this.isSearchDisabled=true;
         this.isLoading = true;
         this.error = null;
         try {
@@ -58,11 +58,11 @@ export default {
           const processedRepos = this.getProcessedRepos(fetchedRepos);
           this.repos = processedRepos;
           this.isLoading = false;
-          this.currentUser = user;
         } catch (error) {
           this.handleError(error);
-          this.currentUser = user;
         }
+        this.isSearchDisabled=false;
+        this.currentUser = user;
       }
     },
 
@@ -102,37 +102,34 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-$text-color: #002bdc;
-.spacer {
-  position: absolute;
+.repos-list {
+  margin: 0 auto;
   width: 1200px;
   height: 568px;
-  left: 360px;
-  top: 206px;
   overflow: hidden;
   box-shadow: 1px 0px 16px rgba(0, 0, 0, 0.17);
   border-radius: 10px;
   padding: 40px 0;
-  .box {
+  &__loader-container {
     display: flex;
     justify-content: flex-start;
     flex-flow: column;
     height: 100%;
     padding: 0 40px;
-    .loader {
+    &__loader {
       width: 200px;
       height: 200px;
       margin: auto;
     }
-    .comunicat {
+  }
+  &__comunicat {
       margin: auto;
-      color: $text-color;
+      color: $primary-color;
     }
-    .repos {
+  &__repo {
       display: grid;
       grid-template-columns: 1fr 1fr;
       grid-gap: 20px;
     }
-  }
 }
 </style>

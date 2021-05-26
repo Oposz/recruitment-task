@@ -1,12 +1,12 @@
 <template>
-  <div class="wrapper">
-    <img :src="repo.photo" alt="zdjęcie" class="photo" />
-    <div class="inside_wrapper">
-      <h4 class="repo_name">{{ repo.name }}</h4>
-      <p class="description">{{ repo.description ?? "Brak opisu" }}</p>
-      <p class="branch">{{ repo.branch }}</p>
+  <div class="repo">
+    <img :src="repo.photo" alt="zdjęcie użytkownika" class="repo__photo" />
+    <div class="repo__data__wrapper">
+      <h4 class="repo__data__wrapper__name">{{ repo.name }}</h4>
+      <p class="repo__data__wrapper__description">{{ repo.description ?? "Brak opisu" }}</p>
+      <p class="repo__data__wrapper__branch">{{ repo.branch }}</p>
     </div>
-    <a class="repo_link" target="_blank" :href="repo.link">
+    <a class="repo__link" target="_blank" :href="repo.link">
       <img src="@/assets/arrow.svg" alt="przejdź do repo" />
     </a>
   </div>
@@ -19,29 +19,29 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.wrapper {
+.repo {
   display: flex;
   align-items: flex-start;
   padding: 26px 30px 13px 30px;
   background-color: #f1f4ff;
   border-radius: 10px;
-  .photo {
+  &__photo {
     width: 60px;
     height: 60px;
     border-radius: 50%;
     object-fit: cover;
   }
-  .inside_wrapper {
+  &__data__wrapper {
     display: flex;
     flex-flow: column;
     overflow: hidden;
     width: 340px;
     margin: 0 20px;
-    .repo_name {
+    &__name {
       margin: 0;
       color: #304389;
     }
-    .description {
+    &__description {
       font-style: normal;
       font-weight: normal;
       font-size: 16px;
@@ -52,7 +52,7 @@ export default {
       white-space: nowrap;
       overflow: hidden;
     }
-    .branch {
+    &__branch {
       font-style: normal;
       font-weight: normal;
       font-size: 10px;
@@ -61,7 +61,7 @@ export default {
       margin-bottom: auto;
     }
   }
-  .repo_link {
+  &__link {
     width: 34px;
     height: 34px;
     align-self: center;

@@ -4,8 +4,7 @@
 
 <style lang="scss" scoped>
 img {
-  position: absolute;
-  left: 360px;
-  top: 30px;
+  width: 140px;
+  height: 43px;
 }
 </style>
