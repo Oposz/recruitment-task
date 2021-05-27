@@ -1,6 +1,6 @@
 # recruitment-task
 
-Live Demo:https://rekrutacja.netlify.app
+Live Demo: https://rekrutacja.netlify.app
 
 ## Project setup
 ```
