@@ -46,4 +46,9 @@ export default {
 body {
   margin: 0;
 }
+@media (max-width:1199px){
+  body{
+    visibility:hidden;
+  }
+}
 </style>

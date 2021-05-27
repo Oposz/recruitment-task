@@ -39,4 +39,9 @@ export default {
     border-radius: 50px;
   }
 }
+@media (max-width:1199px) {
+  .simplebar-track.simplebar-vertical{
+    visibility: hidden !important;
+  }
+}
 </style>

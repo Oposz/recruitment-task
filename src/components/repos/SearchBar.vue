@@ -86,4 +86,9 @@ export default {
     }
   }
 }
+@media (max-width:1199px) {
+  .searchbar__inside-wrapper__user-input-button{
+    visibility: hidden !important;
+  }
+}
 </style>

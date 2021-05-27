@@ -11,7 +11,7 @@
         <div class="repos-list__repo" v-else-if="!error && repos.length > 0">
           <Repo v-for="repo in repos" :key="repo.id" :repo="repo" />
         </div>
-        <h1 class="repos-list__comunicat" v-else-if="!error && repos.length === 0">
+        <h1 class="repos-list__comunicat" v-else-if="!error && (repos.length === 0 && userName)">
           Użytkownik nie ma żadnego repo.
         </h1>
         <h1 class="repos-list__comunicat" v-else>{{ error }}</h1>
